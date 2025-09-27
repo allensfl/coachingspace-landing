@@ -269,7 +269,7 @@ const BetaLandingPage = () => {
             required
           >
             <option value="">Bitte wählen</option>
-            <option value="beginner">Anfänger (< 1 Jahr)</option>
+            <option value="beginner">Anfänger (&lt; 1 Jahr)</option>
             <option value="intermediate">Fortgeschritten (1-3 Jahre)</option>
             <option value="experienced">Erfahren (3-5 Jahre)</option>
             <option value="expert">Experte (> 5 Jahre)</option>
@@ -429,7 +429,7 @@ const BetaLandingPage = () => {
     // Automatische Weiterleitung zur App nach 3 Sekunden
     useEffect(() => {
       const timer = setTimeout(() => {
-        window.location.href = 'https://appcoachflavien.netlify.app';
+       window.location.href = 'https://appcoachflavien.netlify.app';
       }, 3000);
 
       return () => clearTimeout(timer);
