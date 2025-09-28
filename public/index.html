@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoachingSpace Beta - Die Zukunft des digitalen Coachings</title>
+    <title>CoachingSpace Beta</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -11,222 +11,143 @@
             background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
             color: white;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
-        /* Header */
-        .header { padding: 60px 0; text-align: center; }
-        .header h1 { font-size: 3.5rem; margin-bottom: 20px; font-weight: 700; }
-        .header .subtitle { font-size: 1.4rem; margin-bottom: 40px; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 40px; 
+            text-align: center; 
+        }
         
-        /* Beta Spots */
+        h1 { 
+            font-size: 3rem; 
+            margin-bottom: 20px; 
+            font-weight: 300;
+        }
+        
+        .subtitle { 
+            font-size: 1.3rem; 
+            margin-bottom: 40px; 
+            opacity: 0.9; 
+            font-weight: 300;
+        }
+        
         .beta-spots { 
-            background: rgba(59, 130, 246, 0.2); 
-            padding: 30px; 
-            border-radius: 15px; 
-            margin: 40px auto; 
-            text-align: center;
-            max-width: 400px;
+            background: rgba(59, 130, 246, 0.15); 
+            padding: 25px; 
+            border-radius: 12px; 
+            margin: 40px 0; 
             border: 1px solid rgba(59, 130, 246, 0.3);
         }
-        .spots-number { font-size: 3rem; font-weight: bold; color: #60a5fa; display: block; }
-        .spots-text { font-size: 1.2rem; margin-top: 10px; }
         
-        /* Features Grid */
-        .features-section { padding: 80px 0; }
-        .section-title { font-size: 2.5rem; text-align: center; margin-bottom: 60px; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-bottom: 60px; }
-        .feature-card { 
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 40px 30px; 
-            border-radius: 15px; 
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
+        .spots-number { 
+            font-size: 2.5rem; 
+            font-weight: 600; 
+            color: #60a5fa; 
+            display: block; 
         }
-        .feature-card:hover { transform: translateY(-5px); }
-        .feature-card h3 { font-size: 1.5rem; margin-bottom: 20px; color: #60a5fa; }
-        .feature-card p { font-size: 1.1rem; opacity: 0.9; }
-        .feature-icon { font-size: 3rem; margin-bottom: 20px; }
         
-        /* Benefits */
-        .benefits-section { padding: 80px 0; background: rgba(0, 0, 0, 0.2); }
-        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .benefit-item { padding: 30px; text-align: center; }
-        .benefit-item h4 { font-size: 1.3rem; margin-bottom: 15px; color: #60a5fa; }
-        .benefit-item p { opacity: 0.9; }
+        .spots-text { 
+            font-size: 1rem; 
+            margin-top: 8px; 
+            opacity: 0.9;
+        }
         
-        /* CTA Section */
-        .cta-section { padding: 80px 0; text-align: center; }
-        .cta-title { font-size: 2.2rem; margin-bottom: 30px; }
-        .cta-subtitle { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .features { 
+            margin: 50px 0; 
+            text-align: left;
+        }
+        
+        .feature { 
+            margin: 20px 0; 
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .feature:last-child {
+            border-bottom: none;
+        }
+        
+        .feature h3 { 
+            font-size: 1.2rem; 
+            margin-bottom: 8px; 
+            color: #60a5fa;
+            font-weight: 500;
+        }
+        
+        .feature p { 
+            opacity: 0.8; 
+            font-size: 0.95rem;
+        }
         
         .button { 
             background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white; 
-            padding: 20px 50px; 
+            padding: 18px 40px; 
             border: none; 
-            border-radius: 10px; 
-            font-size: 1.2rem; 
+            border-radius: 8px; 
+            font-size: 1.1rem; 
             cursor: pointer;
-            margin: 15px;
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
-            font-weight: 600;
+            font-weight: 500;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            margin-top: 30px;
         }
+        
         .button:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
-        }
-        .button.secondary {
-            background: transparent;
-            border: 2px solid #60a5fa;
-            box-shadow: none;
-        }
-        .button.secondary:hover {
-            background: rgba(96, 165, 250, 0.1);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
         
-        /* Stats */
-        .stats-section { padding: 60px 0; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: center; }
-        .stat-item h3 { font-size: 2.5rem; color: #60a5fa; margin-bottom: 10px; }
-        .stat-item p { font-size: 1.1rem; opacity: 0.9; }
-        
-        /* Footer */
-        .footer { padding: 40px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 60px; }
-        .footer p { opacity: 0.7; }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            .header h1 { font-size: 2.5rem; }
-            .features-grid { grid-template-columns: 1fr; }
-            .container { padding: 0 15px; }
+            .container { padding: 30px 20px; }
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>CoachingSpace Beta</h1>
-            <p class="subtitle">
-                Die All-in-One Plattform, die Ihr Coaching-Business revolutioniert. 
-                Professionelle Tools, intuitive Bedienung, maximale Effizienz.
-            </p>
-            
-            <div class="beta-spots">
-                <span class="spots-number">47</span>
-                <div class="spots-text">Beta-Plätze verfügbar</div>
+        <h1>CoachingSpace</h1>
+        <p class="subtitle">
+            Die professionelle Coaching-Plattform.<br>
+            Alles was Sie brauchen, nichts was Sie stört.
+        </p>
+        
+        <div class="beta-spots">
+            <span class="spots-number">47</span>
+            <div class="spots-text">Beta-Plätze verfügbar</div>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>Dashboard & Übersicht</h3>
+                <p>Alle wichtigen Informationen auf einen Blick</p>
+            </div>
+            <div class="feature">
+                <h3>Session-Management</h3>
+                <p>Planung, Durchführung und Nachbereitung</p>
+            </div>
+            <div class="feature">
+                <h3>Kunden-Verwaltung</h3>
+                <p>Profile, Ziele und Fortschritte dokumentieren</p>
+            </div>
+            <div class="feature">
+                <h3>Business-Tools</h3>
+                <p>Rechnungen, Termine und Dokumente</p>
             </div>
         </div>
-        
-        <!-- Features -->
-        <div class="features-section">
-            <h2 class="section-title">Alles was Sie für erfolgreiches Coaching brauchen</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Intelligentes Dashboard</h3>
-                    <p>Überblick über alle Coaching-Aktivitäten, Termine, Kunden und Fortschritte auf einen Blick. KI-gestützte Insights für bessere Entscheidungen.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎥</div>
-                    <h3>Virtueller Coaching-Raum</h3>
-                    <p>Professionelle Video-Sessions mit integrierten Whiteboards, Screen-Sharing und Recording-Funktionen. Optimal für Remote-Coaching.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3>Session-Management</h3>
-                    <p>Strukturierte Vorbereitung, Durchführung und Nachbereitung von Sessions. Templates, Notizen und automatische Dokumentation.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Kunden-Verwaltung</h3>
-                    <p>Zentrale Verwaltung aller Kunden mit Profilen, Zielen, Fortschritten und individuellen Coaching-Plänen.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <h3>KI-Assistent</h3>
-                    <p>Intelligente Unterstützung bei der Session-Planung, Analyse von Coaching-Verläufen und personalisierte Empfehlungen.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💼</div>
-                    <h3>Business-Tools</h3>
-                    <p>Rechnungsstellung, Terminbuchung, Dokumentenverwaltung und Reports - alles in einer Plattform integriert.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Benefits -->
-        <div class="benefits-section">
-            <div class="container">
-                <h2 class="section-title">Warum CoachingSpace?</h2>
-                <div class="benefits-grid">
-                    <div class="benefit-item">
-                        <h4>Zeit sparen</h4>
-                        <p>Bis zu 3 Stunden pro Woche durch Automatisierung wiederkehrender Aufgaben</p>
-                    </div>
-                    <div class="benefit-item">
-                        <h4>Mehr Kunden</h4>
-                        <p>Professionelles Auftreten und effiziente Prozesse ermöglichen mehr parallele Coachings</p>
-                    </div>
-                    <div class="benefit-item">
-                        <h4>Bessere Ergebnisse</h4>
-                        <p>Strukturierte Methoden und KI-Insights verbessern die Coaching-Qualität messbar</p>
-                    </div>
-                    <div class="benefit-item">
-                        <h4>Ortsunabhängig</h4>
-                        <p>Arbeiten Sie von überall - alle Tools sind cloudbasiert und immer verfügbar</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Stats -->
-        <div class="stats-section">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Erfolgreiche Sessions</p>
-                </div>
-                <div class="stat-item">
-                    <h3>95%</h3>
-                    <p>Kundenzufriedenheit</p>
-                </div>
-                <div class="stat-item">
-                    <h3>3h</h3>
-                    <p>Gesparte Zeit pro Woche</p>
-                </div>
-                <div class="stat-item">
-                    <h3>24/7</h3>
-                    <p>Verfügbarkeit</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- CTA -->
-        <div class="cta-section">
-            <h2 class="cta-title">Werden Sie Teil der Coaching-Revolution</h2>
-            <p class="cta-subtitle">
-                Sichern Sie sich jetzt Ihren exklusiven Beta-Zugang und profitieren Sie als einer der ersten 
-                von den innovativen Features von CoachingSpace.
-            </p>
-            <a href="https://appcoachflavien.netlify.app" class="button">
-                Jetzt Beta-Zugang sichern
-            </a>
-            <a href="#info" class="button secondary">
-                Mehr erfahren
-            </a>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <p>&copy; 2024 CoachingSpace. Entwickelt für professionelle Coaches.</p>
-        </div>
+
+        <a href="https://appcoachflavien.netlify.app" class="button">
+            Zur Beta-Version
+        </a>
     </div>
 </body>
 </html>
