@@ -4,150 +4,480 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CoachingSpace Beta</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             color: white;
             line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
-        .container { 
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        .header { padding: 60px 0; text-align: center; }
+        .header h1 { 
+            font-size: 3.5rem; 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+        }
+        .beta-highlight { color: #60a5fa; }
+        .subtitle { 
+            font-size: 1.25rem; 
+            color: #cbd5e1; 
+            margin-bottom: 30px; 
+        }
+        
+        /* Beta Spots Badge */
+        .beta-spots { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px;
+            background: rgba(245, 158, 11, 0.2); 
+            color: #fbbf24;
+            padding: 12px 20px; 
+            border-radius: 25px; 
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            margin-bottom: 40px;
+        }
+        .pulse-dot { 
+            width: 8px; 
+            height: 8px; 
+            background: #fbbf24; 
+            border-radius: 50%; 
+            animation: pulse 2s infinite; 
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        /* Features Section */
+        .features-section { 
+            background: rgba(30, 41, 59, 0.5); 
+            border: 1px solid rgba(51, 65, 85, 0.5); 
+            border-radius: 15px; 
+            padding: 40px; 
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+        }
+        .section-title { 
+            font-size: 1.5rem; 
+            font-weight: 600; 
+            text-align: center; 
+            margin-bottom: 40px; 
+        }
+        
+        .features-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 40px; 
+        }
+        .feature-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        /* Key Features Lists */
+        .feature-list { 
+            background: rgba(15, 23, 42, 0.6);
+            padding: 30px; 
+            border-radius: 10px;
+            border: 1px solid rgba(51, 65, 85, 0.3);
+        }
+        .feature-list h4 { 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            margin-bottom: 15px; 
+            color: white;
+        }
+        .feature-list ul { list-style: none; }
+        .feature-list li { 
+            color: #cbd5e1; 
+            margin-bottom: 8px; 
+            font-size: 0.9rem;
+        }
+        
+        /* Beta Benefits */
+        .beta-benefits li strong { color: #fbbf24; }
+        
+        /* Form Section */
+        .form-section { 
             max-width: 600px; 
             margin: 0 auto; 
-            padding: 40px; 
+            background: rgba(30, 41, 59, 0.5); 
+            border: 1px solid rgba(51, 65, 85, 0.5); 
+            border-radius: 15px; 
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+        .form-title { 
+            font-size: 2rem; 
+            font-weight: bold; 
             text-align: center; 
+            margin-bottom: 30px; 
         }
         
-        h1 { 
-            font-size: 3rem; 
-            margin-bottom: 20px; 
-            font-weight: 300;
-        }
-        
-        .subtitle { 
-            font-size: 1.3rem; 
-            margin-bottom: 40px; 
-            opacity: 0.9; 
-            font-weight: 300;
-        }
-        
-        .beta-spots { 
-            background: rgba(59, 130, 246, 0.15); 
-            padding: 25px; 
-            border-radius: 12px; 
-            margin: 40px 0; 
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-        
-        .spots-number { 
-            font-size: 2.5rem; 
-            font-weight: 600; 
-            color: #60a5fa; 
+        /* Form Styles */
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { 
             display: block; 
-        }
-        
-        .spots-text { 
-            font-size: 1rem; 
-            margin-top: 8px; 
-            opacity: 0.9;
-        }
-        
-        .features { 
-            margin: 50px 0; 
-            text-align: left;
-        }
-        
-        .feature { 
-            margin: 20px 0; 
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .feature:last-child {
-            border-bottom: none;
-        }
-        
-        .feature h3 { 
-            font-size: 1.2rem; 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            color: #cbd5e1; 
             margin-bottom: 8px; 
-            color: #60a5fa;
-            font-weight: 500;
         }
-        
-        .feature p { 
-            opacity: 0.8; 
-            font-size: 0.95rem;
-        }
-        
-        .button { 
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        .form-group input, .form-group select { 
+            width: 100%; 
+            padding: 12px 16px; 
+            background: rgba(51, 65, 85, 0.5); 
+            border: 1px solid rgba(51, 65, 85, 0.5); 
+            border-radius: 8px; 
             color: white; 
-            padding: 18px 40px; 
+            font-size: 1rem;
+        }
+        .form-group input::placeholder { color: #94a3b8; }
+        .form-group input:focus, .form-group select:focus { 
+            outline: none; 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); 
+        }
+        
+        /* Button */
+        .submit-button { 
+            width: 100%; 
+            background: #2563eb; 
+            color: white; 
+            font-weight: 600; 
+            padding: 16px 24px; 
             border: none; 
             border-radius: 8px; 
-            font-size: 1.1rem; 
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-            margin-top: 30px;
+            font-size: 1rem; 
+            cursor: pointer; 
+            transition: background-color 0.2s;
+            margin-top: 20px;
+        }
+        .submit-button:hover:not(:disabled) { background: #1d4ed8; }
+        .submit-button:disabled { 
+            background: #475569; 
+            cursor: not-allowed; 
         }
         
-        .button:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        /* Warning Box */
+        .warning-box { 
+            background: rgba(245, 158, 11, 0.1); 
+            border: 1px solid rgba(245, 158, 11, 0.3); 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin-top: 30px; 
+        }
+        .warning-title { 
+            color: #fbbf24; 
+            font-weight: 600; 
+            margin-bottom: 12px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        .warning-box .warning-content { color: #cbd5e1; }
+        .warning-box .warning-content p { margin-bottom: 8px; }
+        .warning-box .important-note { 
+            background: rgba(239, 68, 68, 0.2); 
+            border: 1px solid rgba(239, 68, 68, 0.3); 
+            border-radius: 6px; 
+            padding: 12px; 
+            margin-top: 15px; 
+        }
+        .important-note p { 
+            color: #fca5a5; 
+            font-size: 0.9rem; 
+            margin: 0;
         }
         
+        /* Alert Messages */
+        .alert { 
+            padding: 12px 16px; 
+            border-radius: 6px; 
+            margin-bottom: 20px; 
+            font-size: 0.9rem;
+        }
+        .alert-error { 
+            background: rgba(239, 68, 68, 0.2); 
+            border: 1px solid rgba(239, 68, 68, 0.5); 
+            color: #fca5a5; 
+        }
+        .alert-success { 
+            background: rgba(34, 197, 94, 0.2); 
+            border: 1px solid rgba(34, 197, 94, 0.5); 
+            color: #86efac; 
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .container { padding: 30px 20px; }
-            h1 { font-size: 2.5rem; }
-            .subtitle { font-size: 1.1rem; }
+            .container { padding: 0 15px; }
+            .header h1 { font-size: 2.5rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .features-section { padding: 25px; }
+            .form-section { padding: 25px; }
         }
+        
+        /* Hide elements initially */
+        .hidden { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>CoachingSpace</h1>
-        <p class="subtitle">
-            Die professionelle Coaching-Plattform.<br>
-            Alles was Sie brauchen, nichts was Sie stört.
-        </p>
-        
-        <div class="beta-spots">
-            <span class="spots-number">47</span>
-            <div class="spots-text">Beta-Plätze verfügbar</div>
-        </div>
+        <!-- Landing Page -->
+        <div id="landing-page">
+            <div class="header">
+                <h1>CoachingSpace <span class="beta-highlight">Beta</span></h1>
+                <p class="subtitle">Die All-in-One Plattform für professionelles Coaching</p>
+                <div class="beta-spots">
+                    <div class="pulse-dot"></div>
+                    <span>Noch <span id="available-spots">10</span> Beta-Plätze verfügbar</span>
+                </div>
+            </div>
 
-        <div class="features">
-            <div class="feature">
-                <h3>Dashboard & Übersicht</h3>
-                <p>Alle wichtigen Informationen auf einen Blick</p>
+            <!-- Features Section -->
+            <div class="features-section">
+                <h3 class="section-title">Entdecke die CoachingSpace Platform</h3>
+                
+                <!-- Key Features Grid -->
+                <div class="feature-grid">
+                    <div class="feature-list">
+                        <h4>🎯 Hauptfeatures</h4>
+                        <ul>
+                            <li>• Coachee-Verwaltung & Profile</li>
+                            <li>• Session-Dokumentation & Journal</li>
+                            <li>• Task-Management & Deadlines</li>
+                            <li>• 🟢 Coaching Room (Remote-Cockpit)</li>
+                            <li>• 🟣 Coachee-Portal (separater Zugang)</li>
+                            <li>• 🟡 KI-Assistent (geplant)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-list beta-benefits">
+                        <h4>💎 Beta-Vorteile</h4>
+                        <ul>
+                            <li>• <strong>Lebenslange Vollversion-Lizenz</strong></li>
+                            <li>• Wert: 99€/Monat (regulärer Preis)</li>
+                            <li>• Direkter Einfluss auf Entwicklung</li>
+                            <li>• Exklusiver Beta-Tester Status</li>
+                            <li>• Persönlicher Support</li>
+                            <li>• Alle zukünftigen Updates inklusive</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <h3>Session-Management</h3>
-                <p>Planung, Durchführung und Nachbereitung</p>
-            </div>
-            <div class="feature">
-                <h3>Kunden-Verwaltung</h3>
-                <p>Profile, Ziele und Fortschritte dokumentieren</p>
-            </div>
-            <div class="feature">
-                <h3>Business-Tools</h3>
-                <p>Rechnungen, Termine und Dokumente</p>
+
+            <!-- Beta Signup Form -->
+            <div class="form-section">
+                <h2 class="form-title">Jetzt Beta-Tester werden</h2>
+
+                <form id="beta-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Vorname *</label>
+                            <input type="text" name="firstName" required placeholder="Max">
+                        </div>
+                        <div class="form-group">
+                            <label>Nachname *</label>
+                            <input type="text" name="lastName" required placeholder="Mustermann">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>E-Mail-Adresse *</label>
+                        <input type="email" name="email" required placeholder="max@beispiel.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Unternehmen</label>
+                        <input type="text" name="company" placeholder="Coaching Praxis GmbH">
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Coaching-Erfahrung</label>
+                            <select name="experience">
+                                <option value="">Erfahrung wählen</option>
+                                <option value="Neueinsteiger">Neueinsteiger</option>
+                                <option value="1-2 Jahre">1-2 Jahre</option>
+                                <option value="3-5 Jahre">3-5 Jahre</option>
+                                <option value="5+ Jahre">5+ Jahre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Anzahl Coachees (optional)</label>
+                            <select name="coacheeCount">
+                                <option value="">Anzahl wählen</option>
+                                <option value="1-5">1-5</option>
+                                <option value="6-15">6-15</option>
+                                <option value="16-30">16-30</option>
+                                <option value="30+">30+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="error-message" class="alert alert-error hidden"></div>
+                    <div id="success-message" class="alert alert-success hidden"></div>
+
+                    <button type="submit" class="submit-button" id="submit-btn">
+                        Beta-Platz reservieren (<span id="spots-counter">10</span>/10)
+                    </button>
+                </form>
+
+                <!-- Beta Bedingungen -->
+                <div class="warning-box">
+                    <h4 class="warning-title">⚠️ Wichtig: Bedingungen für kostenlose Vollversion</h4>
+                    <div class="warning-content">
+                        <p><strong>1. Intensive Testphase:</strong> Alle 7 Hauptbereiche gründlich testen (mindestens 2 Stunden)</p>
+                        <p><strong>2. Detailliertes Feedback:</strong> Strukturiertes Formular per E-Mail ausfüllen</p>
+                        <p><strong>3. Spezifische Anforderungen:</strong> Mindestens 3 Probleme + 3 Verbesserungsvorschläge</p>
+                    </div>
+                    <div class="important-note">
+                        <p><strong>Warnung:</strong> Oberflächliches Feedback wie "App ist cool" berechtigt NICHT zur kostenlosen Vollversion.</p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <a href="https://appcoachflavien.netlify.app" class="button">
-            Zur Beta-Version
-        </a>
     </div>
+
+    <script>
+        // Supabase Configuration
+        const supabaseUrl = 'https://jlvmkfpjnqvtnqepmpsf.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impsdm1rZnBqbnF2dG5xZXBtcHNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5MzE3MjMsImV4cCI6MjA3MzUwNzcyM30.xdltEUoQC5zK6Im6NIJBBmHy2XzR36A9NoarPTwatbQ';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let availableSpots = 10;
+
+        // Load available spots
+        async function loadAvailableSpots() {
+            try {
+                const { count, error } = await supabase
+                    .from('beta_users')
+                    .select('*', { count: 'exact', head: true });
+                
+                if (error) throw error;
+                availableSpots = Math.max(0, 10 - (count || 0));
+                
+                // Update UI
+                document.getElementById('available-spots').textContent = availableSpots;
+                document.getElementById('spots-counter').textContent = availableSpots;
+                
+                // Disable form if no spots available
+                if (availableSpots === 0) {
+                    document.getElementById('submit-btn').disabled = true;
+                    document.getElementById('submit-btn').textContent = 'Keine Plätze mehr verfügbar';
+                }
+            } catch (err) {
+                console.error('Error loading spots:', err);
+                // Fallback values
+                availableSpots = 8;
+                document.getElementById('available-spots').textContent = availableSpots;
+                document.getElementById('spots-counter').textContent = availableSpots;
+            }
+        }
+
+        // Show message helper
+        function showMessage(message, isError = true) {
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            if (isError) {
+                errorDiv.textContent = message;
+                errorDiv.classList.remove('hidden');
+                successDiv.classList.add('hidden');
+            } else {
+                successDiv.textContent = message;
+                successDiv.classList.remove('hidden');
+                errorDiv.classList.add('hidden');
+            }
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+                successDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Handle form submission
+        document.getElementById('beta-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Set loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Wird gesendet...';
+            
+            try {
+                // Check if email already exists
+                const { data: existingUsers, error: checkError } = await supabase
+                    .from('beta_users')
+                    .select('email')
+                    .eq('email', data.email);
+
+                if (checkError) throw checkError;
+
+                if (existingUsers && existingUsers.length > 0) {
+                    showMessage('Diese E-Mail-Adresse ist bereits registriert.', true);
+                    return;
+                }
+
+                // Get current count for spot number
+                const { count } = await supabase
+                    .from('beta_users')
+                    .select('*', { count: 'exact', head: true });
+
+                const spotNumber = (count || 0) + 1;
+
+                // Insert new beta user
+                const { data: insertData, error: insertError } = await supabase
+                    .from('beta_users')
+                    .insert([{
+                        first_name: data.firstName,
+                        last_name: data.lastName,
+                        email: data.email,
+                        company: data.company || null,
+                        experience: data.experience || null,
+                        coachee_count: data.coacheeCount || null,
+                        beta_spot_number: spotNumber,
+                        temp_password: 'beta2024temp!',
+                        password_changed: false,
+                        created_at: new Date().toISOString()
+                    }])
+                    .select();
+
+                if (insertError) throw insertError;
+
+                showMessage('Beta-Anmeldung erfolgreich! Sie erhalten in Kürze eine E-Mail mit Ihren Zugangsdaten.', false);
+                
+                // Reset form and update spots
+                e.target.reset();
+                loadAvailableSpots();
+                
+                // Redirect to app after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'https://appcoachflavien.netlify.app';
+                }, 3000);
+
+            } catch (err) {
+                console.error('Signup error:', err);
+                showMessage('Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.', true);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = `Beta-Platz reservieren (${availableSpots}/10)`;
+            }
+        });
+
+        // Load spots on page load
+        loadAvailableSpots();
+    </script>
 </body>
 </html>

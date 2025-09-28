@@ -1,7 +1,0 @@
-{
-  "name": "coachingspace-landing",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "cp public/index.html dist/index.html && mkdir -p dist && cp public/* dist/ 2>/dev/null || true"
-  }
-}
